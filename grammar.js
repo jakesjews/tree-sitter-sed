@@ -34,7 +34,11 @@ module.exports = grammar({
 
     label_definition:$=>seq(':',field('name',$.label_reference),/\r?\n/),
     label_reference:_=>token(LABEL_RE),
-    meta_directive:_=>token(seq(/--[A-Za-z0-9_-]+|-[Einrl]+/,/[^\r\n]*/,/\r?\n/)),
+    meta_directive: _ => token(seq(
+      /--[A-Za-z0-9_.=-]+|-[A-Za-z][A-Za-z0-9_.=-]*/,  // accepts 1-dash long opts
+      /[^\r\n]*/,
+      /\r?\n/
+    )),
     file_path:_=>token(/[A-Za-z0-9_./-]+/),
   }
 });

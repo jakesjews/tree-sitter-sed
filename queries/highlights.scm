@@ -6,3 +6,5 @@
 (label_reference) @label
 (regex_address) @constant.regex
 (text_block) @string
+(meta_directive) @comment
+

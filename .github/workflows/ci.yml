@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1 – Checkout the repo
+      - uses: actions/checkout@v4
+
+      # 2 – Install Node (for tree-sitter-cli’s JS generator)
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'   # falls back to 18 if the file is absent
+          cache: 'npm'
+
+      # 3 – Install the CLI once per cache
+      - name: Install tree-sitter CLI
+        run: npm install --global tree-sitter-cli
+
+      # 4 – Generate the parser C sources
+      - name: tree-sitter generate
+        run: tree-sitter generate
+
+      # 5 – Compile the shared library
+      - name: tree-sitter build
+        run: tree-sitter build
+
+      # 6 – Run the unit-test corpus
+      - name: tree-sitter test
+        run: tree-sitter test
+
+      # 7 – Upload the compiled parser (optional, useful for debugging)
+      - name: Upload parser artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: parser-shared-object
+          path: |
+            parser.so
+            build/*parser.*
+

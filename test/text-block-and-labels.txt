@@ -1,0 +1,11 @@
+=== text-block-and-labels
+:start
+a\
+Line1\
+Line2
+b start
+---
+(source_file
+  (label_definition name: (label_reference))
+  (command_line command: (command) payload: (text_block))
+  (command_line command: (command) payload: (label_reference)))

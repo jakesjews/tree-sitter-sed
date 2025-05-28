@@ -1,0 +1,328 @@
+{
+  "name": "sed",
+  "rules": {
+    "source_file": {
+      "type": "REPEAT",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "command_line"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "blank"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "label_definition"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "meta_directive"
+          }
+        ]
+      }
+    },
+    "blank": {
+      "type": "PATTERN",
+      "value": "\\r?\\n"
+    },
+    "command_line": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "address_range"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "command",
+          "content": {
+            "type": "SYMBOL",
+            "name": "command"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "payload",
+              "content": {
+                "type": "SYMBOL",
+                "name": "payload"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "PATTERN",
+          "value": "\\r?\\n"
+        }
+      ]
+    },
+    "address_range": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "address"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ","
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "address"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "address": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "last"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "regex_address"
+        }
+      ]
+    },
+    "number": {
+      "type": "PATTERN",
+      "value": "\\d+"
+    },
+    "last": {
+      "type": "PATTERN",
+      "value": "\\$"
+    },
+    "command": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[abcdeghHilnNpPrstwxyyzq:=]"
+      }
+    },
+    "payload": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "substitute_command"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "translit_body"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "text_block"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[rRw]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "file_path"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[btT]"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "label_reference"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "command_payload"
+        }
+      ]
+    },
+    "substitute_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "substitute_body"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "substitute_flags"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "w"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "file_path"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "label_definition": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "label_reference"
+          }
+        },
+        {
+          "type": "PATTERN",
+          "value": "\\r?\\n"
+        }
+      ]
+    },
+    "label_reference": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[A-Za-z0-9_]+"
+      }
+    },
+    "meta_directive": {
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "--[A-Za-z0-9_-]+|-[Einrl]+"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[^\\r\\n]*"
+          },
+          {
+            "type": "PATTERN",
+            "value": "\\r?\\n"
+          }
+        ]
+      }
+    },
+    "file_path": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[A-Za-z0-9_./-]+"
+      }
+    }
+  },
+  "extras": [
+    {
+      "type": "PATTERN",
+      "value": "\\s+"
+    }
+  ],
+  "conflicts": [],
+  "precedences": [],
+  "externals": [
+    {
+      "type": "SYMBOL",
+      "name": "regex_address"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "substitute_body"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "substitute_flags"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "translit_body"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "command_payload"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "text_block"
+    }
+  ],
+  "inline": [],
+  "supertypes": []
+}

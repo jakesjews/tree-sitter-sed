@@ -1,0 +1,242 @@
+[
+  {
+    "type": "address",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "last",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "regex_address",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "address_range",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "address",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "blank",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "command_line",
+    "named": true,
+    "fields": {
+      "command": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "command",
+            "named": true
+          }
+        ]
+      },
+      "payload": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "payload",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "address_range",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "label_definition",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "label_reference",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "payload",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "command_payload",
+          "named": true
+        },
+        {
+          "type": "file_path",
+          "named": true
+        },
+        {
+          "type": "label_reference",
+          "named": true
+        },
+        {
+          "type": "substitute_command",
+          "named": true
+        },
+        {
+          "type": "text_block",
+          "named": true
+        },
+        {
+          "type": "translit_body",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "source_file",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "blank",
+          "named": true
+        },
+        {
+          "type": "command_line",
+          "named": true
+        },
+        {
+          "type": "label_definition",
+          "named": true
+        },
+        {
+          "type": "meta_directive",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "substitute_command",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "file_path",
+          "named": true
+        },
+        {
+          "type": "substitute_body",
+          "named": true
+        },
+        {
+          "type": "substitute_flags",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": ",",
+    "named": false
+  },
+  {
+    "type": ":",
+    "named": false
+  },
+  {
+    "type": "command",
+    "named": true
+  },
+  {
+    "type": "command_payload",
+    "named": true
+  },
+  {
+    "type": "file_path",
+    "named": true
+  },
+  {
+    "type": "label_reference",
+    "named": true
+  },
+  {
+    "type": "last",
+    "named": true
+  },
+  {
+    "type": "meta_directive",
+    "named": true
+  },
+  {
+    "type": "number",
+    "named": true
+  },
+  {
+    "type": "regex_address",
+    "named": true
+  },
+  {
+    "type": "substitute_body",
+    "named": true
+  },
+  {
+    "type": "substitute_flags",
+    "named": true
+  },
+  {
+    "type": "text_block",
+    "named": true
+  },
+  {
+    "type": "translit_body",
+    "named": true
+  },
+  {
+    "type": "w",
+    "named": false
+  }
+]

@@ -1,0 +1,15 @@
+=== substitute-and-translit
+s/foo/bar/gpw out.txt
+y#abc#xyz#
+---
+(source_file
+  (command_line
+    command: (command)
+    payload: (substitute_command
+      (substitute_body)
+      (substitute_flags)
+      "w"
+      (file_path)))
+  (command_line
+    command: (command)
+    payload: (translit_body)))

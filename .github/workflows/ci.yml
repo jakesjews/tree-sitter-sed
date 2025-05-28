@@ -16,24 +16,24 @@ jobs:
       # 2 – Install Node (for tree-sitter-cli’s JS generator)
       - uses: actions/setup-node@v4
         with:
-          node-version-file: '.nvmrc'   # falls back to 18 if the file is absent
+          node-version: 22.x
           cache: 'npm'
 
       # 3 – Install the CLI once per cache
       - name: Install tree-sitter CLI
-        run: npm install --global tree-sitter-cli
+        run: npm install
 
       # 4 – Generate the parser C sources
       - name: tree-sitter generate
-        run: tree-sitter generate
+        run: npm run generate
 
       # 5 – Compile the shared library
       - name: tree-sitter build
-        run: tree-sitter build
+        run: npm run build
 
       # 6 – Run the unit-test corpus
       - name: tree-sitter test
-        run: tree-sitter test
+        run: npm run test
 
       # 7 – Upload the compiled parser (optional, useful for debugging)
       - name: Upload parser artefact

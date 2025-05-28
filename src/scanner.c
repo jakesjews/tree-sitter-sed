@@ -21,7 +21,7 @@ static bool scan_regex(TSLexer *lx){
   for(;;){
     if(lx->lookahead=='\\'){ adv_cont(lx); continue;}
     if(lx->lookahead==d){ adv_cont(lx); break;}
-    if(lx->lookahead==0) return false;
+    if (lx->lookahead == 0 || lx->lookahead == '\n') return false;
     adv_cont(lx);
   }
   lx->mark_end(lx);
@@ -86,7 +86,7 @@ static bool scan_text(TSLexer *lx){
   adv_cont(lx);
   char prev=0;
   for(;;){
-    if(lx->lookahead==0) return false;
+    if (lx->lookahead == 0 || lx->lookahead == '\n') return false;
     if(lx->lookahead=='\n'&&prev!='\\') break;
     prev=lx->lookahead;
     adv_cont(lx);

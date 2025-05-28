@@ -37,7 +37,7 @@ static bool scan_sub_body(TSLexer *lx){
   while(seen<2){
     if(lx->lookahead=='\\'){ adv_cont(lx); continue;}
     if(lx->lookahead==d){ adv_cont(lx); ++seen; continue;}
-    if(lx->lookahead==0) return false;
+    if (lx->lookahead == 0 || lx->lookahead == '\n') return false;
     adv_cont(lx);
   }
   lx->mark_end(lx);
@@ -61,7 +61,7 @@ static bool scan_translit(TSLexer *lx){
   while(seen<2){
     if(lx->lookahead=='\\'){ adv_cont(lx); continue;}
     if(lx->lookahead==d){ adv_cont(lx); ++seen; continue;}
-    if(lx->lookahead==0) return false;
+    if (lx->lookahead == 0 || lx->lookahead == '\n') return false;
     adv_cont(lx);
   }
   lx->mark_end(lx);

@@ -1,5 +1,5 @@
 ---
 triple:          'arm64-apple-darwin'
-binary-path:     '/Users/jacob/Downloads/tree-sitter-sed/sed.dylib'
+binary-path:     '/Users/jacob/dev/tree-sitter-sed/sed.dylib'
 relocations:     []
 ...
